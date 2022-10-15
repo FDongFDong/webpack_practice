@@ -8,7 +8,7 @@
 - Dynamic Loading & Lazy Loading 미지원
 
 ## webpack 설정 및 빌드
-[Part 1]()
+[Part 1](https://github.com/FDongFDong/webpack_practice/tree/main/part1)
 
 1. webpack 설치
     ```
@@ -73,6 +73,7 @@ module.exports = {
 ___
 
 ## plugin 적용
+[source code: part3](https://github.com/FdongFdong/webpack_practice/tree/main/part3)
 [webpack/plugins](https://webpack.js.org/plugins/)
 
 - 웹팩의 기본적인 동작에 추가적인 기능을 제공하는 속성
@@ -106,3 +107,59 @@ module.exports = {
 };
 
 ```
+___
+
+
+## Webpack Dev Server
+
+- 코드 수정 시 즉각 반영되어 빌드된 파일이 수정되도록 하기 위함
+  1. 코드 수정
+  2. build 진행
+- 매번 진행함에 있어 불편함을 해소하기 위함
+- 자동으로 웹팩 빌드 후 브라우저 새로고침까지 진행한다.
+
+
+1. 설치
+```shell
+npm i webpack webpack-cli webpack-dev-server html-webpack-plugin -D
+```
+2. package.json 수정
+```
+  "scripts": {
+    "dev": "webpack-dev-server"
+  },
+```
+
+3. webpack.config.js 수정
+```javascript
+var path = require('path');
+var HtmlWebpackPlugin = require('html-webpack-plugin'); 
+
+module.exports = {
+  mode: 'none',
+  entry: './index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  devServer: {  // 카멜케이스로 진행한다.
+    port: 9000, // localhost:9000에 Server를 연다.
+    // overlay: false 등 다양한 옵션을 지원한다. 
+  },
+  plugins: [
+    new HtmlWebpackPlugin({ 
+      // index.html 템플릿을 기반으로 빌드 결과물을 추가해줌
+      template: 'index.html',
+    }),
+  ],
+};
+ ```
+4. localhost:9000 이동하여 확인
+  
+
+
+- 코드의 변경사항이 발생하면 바로 재빌드하고 웹페이지를 새로고침한다.
+- 메모리 상으로만 빌드 결과를 올려 놓기 때문에 파일시스템에서 보이지 않는다.
+- 해당 프로젝트가 완성되면 package.json에 'build': 'webpack'를 추가하여 빌드한다.
+
+HtmlWebpackPlugin으로 HTML 결과물을 만들어주고 그안에 내용들(templage)을 포함해서 webpack에 들어가도록 한다.
