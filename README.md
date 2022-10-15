@@ -33,15 +33,16 @@ ___
 1. entry : 빌드를 할 대상
   - 빌드하기 위해 필요한 최초의 진입점인 자바스크립트 파일 경로
 2. output : 빌드 후 결과물에 대한 파일 경로
-3. loader : 웹팩이 웹 애플리케이션을 해석할 때 자바스크립트 파일이 아닌 웹 자원(HTML, CSS, Images 등)들을 변환할 수 있도록 도와주는 속성
-4. plugin
+3. loader(module) : 웹팩이 웹 애플리케이션을 해석할 때 자바스크립트 파일이 아닌 웹 자원(HTML, CSS, Images 등)들을 변환할 수 있도록 도와주는 속성
+4. plugin : 추가적인 기능을 제공하는 속성
 
 - devtool: 'source-map'
   - 빌드한 결과물과 빌드되기전 결과물을 연결해주는 옵션, Chrome 개발자 도구에서 소스코드를 확인할 수 있다.
 
 ___
 
-## Code Splitting
+## Loader
+[webpack/loader](https://webpack.js.org/loaders/)
 
 ```javascript
 var path = require('path');
@@ -70,4 +71,38 @@ module.exports = {
 - css-loader : css가 웹팩에 들어갈 수 있게한다.
 
 ___
+
 ## plugin 적용
+[webpack/plugins](https://webpack.js.org/plugins/)
+
+- 웹팩의 기본적인 동작에 추가적인 기능을 제공하는 속성
+- 결과물의 형태를 바꾸거나 부가적인 역할을 한다.
+  - css파일이 분리되어 dist/main.css로 만들어지는 것을 확인할 수 있다.
+- 플러그인의 배열에는 생성자 함수로 생성한 객체 인스턴스만 추가될 수 있다.
+
+
+```javascript
+var path = require('path');
+var MiniCssExtractPlugin = require('mini-css-extract-plugin');
+
+module.exports = {
+  mode: 'none',
+  entry: './index.js',
+  output: {
+    filename: 'bundle.js',
+    path: path.resolve(__dirname, 'dist'),
+  },
+  module: {
+    rules: [
+      {
+        test: /\.css$/,
+        use: [
+          { loader: MiniCssExtractPlugin.loader }, 'css-loader'
+        ],
+      },
+    ],
+  },
+  plugins: [new MiniCssExtractPlugin()], // 객체 인스턴스
+};
+
+```
