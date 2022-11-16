@@ -8,7 +8,7 @@
 - Dynamic Loading & Lazy Loading 미지원
 
 ## webpack 설정 및 빌드
-[Part 1](https://github.com/FDongFDong/webpack_practice/tree/main/part1)
+> [Part 1](https://github.com/FDongFDong/webpack_practice/tree/main/part1)
 
 1. webpack 설치
     ```
@@ -73,7 +73,7 @@ module.exports = {
 ___
 
 ## plugin 적용
-[source code: part3](https://github.com/FdongFdong/webpack_practice/tree/main/part3)
+> [source code: part3](https://github.com/FdongFdong/webpack_practice/tree/main/part3)
 [webpack/plugins](https://webpack.js.org/plugins/)
 
 - 웹팩의 기본적인 동작에 추가적인 기능을 제공하는 속성
